@@ -1,5 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const { nextTick } = require("process");
+const { promisify } = require("util");
 
 const secretToken = "my-newphone-is-iphone";
 
@@ -15,6 +17,7 @@ const createToken = (user, req, res) => {
     httpOnly: true,
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
+
   user.password = undefined;
   res.status(201).json({
     status: "success",
@@ -41,9 +44,73 @@ exports.signup = async (req, res) => {
     });
     createToken(user, req, res);
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       status: "Fail",
-      message: err.message,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = res.body;
+    if (!email || !password) {
+      return res.status(401).json({
+        status: "Error",
+        message: "Please provide email or password",
+      });
+    }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      return res.status(401).json({
+        status: "Error",
+        message: "Invalid email or password",
+      });
+    }
+    createToken(user, req, res);
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({
+      status: "Error",
+      message: "Internal Server Error",
+    });
+  }
+};
+
+exports.protect = async (req, res, next) => {
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+    if (!token) {
+      return res.status(401).json({
+        status: "Unauthorized",
+        message: "Please log in to access this website",
+      });
+    }
+    const decoded = await promisify(jwt.verify)(token, secretToken);
+    const currentUser = await User.findById(decoded._id);
+    if (!currentUser) {
+      res.status(401).json({
+        status: "Unauthorized",
+        message: "Please log in with a valid email to access this page",
+      });
+    }
+    req.user = currentUser;
+    res.locals.user = currentUser;
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "Fail",
+      message: "Internal Server Error",
     });
   }
 };
