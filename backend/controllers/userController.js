@@ -1,6 +1,5 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const { nextTick } = require("process");
 const { promisify } = require("util");
 
 const secretToken = "my-newphone-is-iphone";
@@ -44,17 +43,24 @@ exports.signup = async (req, res) => {
     });
     createToken(user, req, res);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "Fail",
-      message: "Internal Server Error",
-    });
+    if (err.code === 11000 || err.code === 11001) {
+      res.status(500).json({
+        status: "Fail",
+        message: "Email is already in use",
+      });
+    } else {
+      res.status(500).json({
+        status: "Fail",
+        message: "Internal Server Error",
+        error: err.message,
+      });
+    }
   }
 };
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = res.body;
+    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(401).json({
         status: "Error",
@@ -62,6 +68,7 @@ exports.login = async (req, res) => {
       });
     }
     const user = await User.findOne({ email }).select("+password");
+
     if (!user || !(await user.correctPassword(password, user.password))) {
       return res.status(401).json({
         status: "Error",
@@ -70,7 +77,6 @@ exports.login = async (req, res) => {
     }
     createToken(user, req, res);
   } catch (err) {
-    console.log(err.message);
     return res.status(500).json({
       status: "Error",
       message: "Internal Server Error",
@@ -96,7 +102,7 @@ exports.protect = async (req, res, next) => {
       });
     }
     const decoded = await promisify(jwt.verify)(token, secretToken);
-    const currentUser = await User.findById(decoded._id);
+    const currentUser = await User.findById(decoded.id);
     if (!currentUser) {
       res.status(401).json({
         status: "Unauthorized",
@@ -112,5 +118,17 @@ exports.protect = async (req, res, next) => {
       status: "Fail",
       message: "Internal Server Error",
     });
+  }
+};
+
+exports.deleteAllUser = async (req, res) => {
+  try {
+    await User.deleteMany();
+    res.status(200).json({
+      status: "success",
+      user: null
+    })
+  } catch (err) {
+    res.status(500).json({ status: "Fail", message: "Internal Server Error" });
   }
 };

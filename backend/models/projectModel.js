@@ -1,33 +1,42 @@
 const mongoose = require("mongoose");
 
+const taskSchema = new mongoose.Schema({
+  name: { type: String, default: "Add Task Name" },
+  description: { type: String, default: "Add Task Description" },
+  completed: { type: Boolean, default: false },
+});
+
+const taskMileStoneSchema = new mongoose.Schema({
+  name: { type: String, default: "Add Task" },
+  description: { type: String, default: "Add Task Description" },
+  completed: { type: Boolean, default: false },
+});
+
+const milestoneSchema = new mongoose.Schema({
+  title: { type: String, default: "Add Milestone Title" },
+  description: { type: String, default: "Add Milestone Description" },
+  completed: { type: Boolean, default: false },
+  duedate: { type: String },
+  tasks: [taskMileStoneSchema],
+});
+
 const projectSchema = new mongoose.Schema({
-  title: { type: String, default: "Title of the Project" },
-  overview: { type: String, default: "It is a overview of the project" },
-  members: [{ memberID: { type: String } }],
-  timer: { type: Date, default: Date.now() },
-  tasks: [
+  title: { type: String, default: "Add Task Name" },
+  overview: { type: String, default: "It is an overview of the project" },
+  members: [
     {
-      name: String,
-      description: String,
-      completed: { type: Boolean, default: false },
+      memberID: { type: String },
+      role: {
+        type: String,
+        enum: ["member", "guide", "admin"],
+        default: "member",
+      },
     },
   ],
+  timer: { type: String },
+  tasks: [taskSchema],
   chat: [{ memberID: { type: String }, chat: { type: String } }],
-  mileStone: [
-    {
-      title: String,
-      description: String,
-      completed: { type: Boolean, default: false },
-      duedate: { type: String },
-      tasks: [
-        {
-          name: String,
-          description: String,
-          completed: { type: Boolean, default: false },
-        },
-      ],
-    },
-  ],
+  milestone: [milestoneSchema],
 });
 
 const Project = mongoose.model("Project", projectSchema);

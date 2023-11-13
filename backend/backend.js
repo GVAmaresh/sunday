@@ -7,6 +7,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 app.use(cors());
 app.use(cookieParser());
+
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
@@ -19,7 +20,7 @@ process.on("uncaughtException", (err) => {
 app.use(express.json());
 
 app.use("/api/v1/project", projectRouter);
-app.use("/api/v1/userProject", userRouter);
+app.use("/api/v1/user", userRouter);
 
 const dbUrl = process.env.DATABASE.replace(
   "<PASSWORD>",
