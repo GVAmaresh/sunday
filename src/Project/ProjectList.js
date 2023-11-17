@@ -1,4 +1,4 @@
-import React, { useContext } from "react"; 
+import React, { useContext } from "react";
 import { UserContext } from "../App";
 function ProjectList() {
   //   const [createProject, setCreateProject] = useState(false);
@@ -25,20 +25,37 @@ function ProjectList() {
         <div
           className="project"
           id={index}
-          onClick={() => {handleProjectClick(index);setCreateProject(false)}}
+          onClick={() => {
+            handleProjectClick(index);
+            setCreateProject(false);
+          }}
           key={index}
         >
           Nokia Website
         </div>
       ))}
       {createProject ? (
-        <div className="newProject" onKeyPress={handleKeyPress} >
-          <input type="text" className="projectTitle" name="" id="" />
+        <div className="newProject" onKeyPress={handleKeyPress}>
+          <input
+            type="text"
+            className="projectTitle"
+            onBlur={() => setCreateProject(false)}
+            ref={(inputRef) => {
+              if (inputRef && createProject) {
+                inputRef.focus();
+              }
+            }}
+            name=""
+            id=""
+          />
         </div>
       ) : (
         <div
           className="createProject"
-          onClick={() => {setCreateProject(true);handleProjectClick('')}}
+          onClick={() => {
+            setCreateProject(true);
+            handleProjectClick("");
+          }}
         >
           +
         </div>
