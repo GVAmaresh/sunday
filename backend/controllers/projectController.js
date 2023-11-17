@@ -12,7 +12,6 @@ exports.deleteAllProject = async (req, res) => {
       if(deletedProject){
         for(const user of deletedProject.members){
           const del = await User.findByIdAndUpdate(user.memberID, {$pull: {projectList: {projectID: project.projectID}}})
-          console.log(del)
         }
       }
     }
@@ -175,10 +174,13 @@ exports.updateMember = async (req, res) => {
 
 exports.updateMyProject = async (req, res) => {
   try {
-    const { title, overview, timer, chat } = req.body;
+    const { title, overview, timer, chat, progress } = req.body;
     const projectID = req.params.id;
     const updateData = {};
 
+    if(progress){
+      updateData.progress = progress;
+    }
     if (title) {
       updateData.title = title;
     }
@@ -189,8 +191,8 @@ exports.updateMyProject = async (req, res) => {
       updateData.timer = timer;
     }
     if (chat) {
-      const user = req.user;
-      updateData.$push = { chat: { memberID: user._id, chat } };
+      const user = await User.findById(req.user._id);
+      updateData.$push = { chat: { memberID: user._id, memberName: user.name, memberPhoto: user.photo, chat } };
     }
     const updatedProject = await Project.findByIdAndUpdate(
       projectID,

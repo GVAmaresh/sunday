@@ -35,7 +35,31 @@ const projectSchema = new mongoose.Schema({
   ],
   timer: { type: String },
   tasks: [taskSchema],
-  chat: [{ memberID: { type: String }, chat: { type: String } }],
+  progress: {
+    type: String,
+    default: "0%",
+    enum: [
+      "0%",
+      "10%",
+      "20%",
+      "30%",
+      "40%",
+      "50%",
+      "60%",
+      "70%",
+      "80%",
+      "90%",
+      "100%",
+    ],
+  },
+  chat: [
+    {
+      memberID: { type: String },
+      memberPhoto: { type: String, default: "photo.png" },
+      memberName: { type: String },
+      chat: { type: String },
+    },
+  ],
   milestone: [milestoneSchema],
 });
 

@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { createContext, useState } from "react";
+import "./App.css";
+import MainPage from "./Main Page/MainPage";
+import SideNav from "./Main Page/SideNav";
+export const UserContext = createContext();
 function App() {
+  const [createProject, setCreateProject] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{createProject, setCreateProject}}>
+      <div className="App">
+        <SideNav />
+        <MainPage />
+      </div>
+    </UserContext.Provider>
   );
 }
 

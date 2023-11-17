@@ -1,38 +1,65 @@
 .App {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+.sideNav {
+  height: 100vh;
+  background-color: aqua;
+}
+.mainPage {
+  height: 100vh;
+  background-color: bisque;
+}
+.userMain{
   text-align: center;
+  display: grid;
+  place-items: center;
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+  margin: 2%;
+  padding-bottom: 10%;
 }
+.userPhoto {
+  height: 20vh;
+  width: 40%;
+  background-color: aqua;
+  clip-path: circle();
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.project{
+  text-align: center;
+  padding: 3%;
+  border-radius: 10px;
+  margin: 5%;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.projectTitle{
+  background-color: white;
+  border: 0px solid black;
+  text-align: center;
+  padding: 2%;
+  border-radius: 10px;
+  padding-left: 5%;
+  padding-right: 5%;
 }
-
-.App-link {
-  color: #61dafb;
+.newProject{
+  text-align: center;
+  margin: 5%;
+  border-radius: 10px;
 }
+.createProject{
+  text-align: center;
+  border: 1px solid black;
+  margin: 5%;
+  padding: 2%;
+  border-radius: 10px;
+}
+.projectHeading{
+  border-bottom: 2px solid #C0C0C0;
+  text-transform: uppercase;
+  padding: 5%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: x-large;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
