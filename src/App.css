@@ -1,16 +1,94 @@
+/* ////////// SideNav ////////////// */
+body::-webkit-scrollbar {
+  display: none;
+}
 .App {
   display: grid;
   grid-template-columns: 1fr 4fr;
+  height: 100%;
+  width: 100%;
 }
 .sideNav {
-  height: 100vh;
+  height: 100%;
   background-color: aqua;
 }
 .mainPage {
-  height: 100vh;
+  height: 100%;
   background-color: bisque;
 }
-.userMain{
+
+/* /////////////////////////////////// Login //////////////////////////////////// */
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.image {
+  height: 90vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  }
+.login {
+  background-color: black;
+  z-index: 200;
+  height: 90vh;
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.myLogin {
+  position: absolute;
+  margin-top: 10%;
+  margin-left: 15%;
+  padding: 5%;
+  padding-top: 3%;
+  border-radius: 10px;
+  background-color: white;
+}
+.email,
+.name,
+.photo,
+.password,
+.changePassword {
+  margin-bottom: 5%;
+}
+input {
+  border: solid 0px black;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 4%;
+  background-color: #e4f4f3;
+}
+.signin {
+  text-align: center;
+  background-color: indigo;
+  font-size: 20px;
+  padding: 5%;
+  border-radius: 10px;
+  margin-left: 5%;
+  cursor: pointer;
+  color: white;
+}
+.signup {
+  margin-top: 20%;
+  text-align: center;
+}
+.shift {
+  margin-top: 5%;
+  text-transform: uppercase;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+}
+.welcome {
+  text-align: center;
+  font-weight: 600;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
+  padding-bottom: 10%;
+}
+
+/* ////////////////////////// User Main /////////////////////////////*/
+.userMain {
   text-align: center;
   display: grid;
   place-items: center;
@@ -23,18 +101,26 @@
   width: 40%;
   background-color: aqua;
   clip-path: circle();
-
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.project{
+.userLogout{
+  padding-top: 5%;
+  cursor: pointer;
+}
+.userLogin{
+  cursor: pointer;
+}
+/* ////////////////////////////// Project List ///////////////////////////// */
+.project {
   text-align: center;
   padding: 3%;
   border-radius: 10px;
   margin: 5%;
+  cursor: pointer;
 }
-.projectTitle{
+.projectTitle {
   background-color: white;
   border: 0px solid black;
   text-align: center;
@@ -43,22 +129,183 @@
   padding-left: 5%;
   padding-right: 5%;
 }
-.newProject{
+.newProject {
   text-align: center;
   margin: 5%;
   border-radius: 10px;
 }
-.createProject{
+.createProject {
   text-align: center;
   border: 1px solid black;
   margin: 5%;
   padding: 2%;
   border-radius: 10px;
+  cursor: pointer;
 }
-.projectHeading{
-  border-bottom: 2px solid #C0C0C0;
+.projectHeading {
+  border-bottom: 2px solid #c0c0c0;
   text-transform: uppercase;
   padding: 5%;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: x-large;
+}
+
+/* ///////////////////////// ProjectDetails //////////////////////// */
+
+.projectDetails {
+  margin: 5%;
+  border-bottom: 2px solid #c0c0c0;
+  padding-bottom: 2%;
+}
+.heading {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 600;
+  font-size: xxx-large;
+  cursor: pointer;
+  padding: 1%;
+}
+.inputHeading {
+  font-weight: 600;
+  padding: 1%;
+  font-size: xxx-large;
+  border-radius: 10px;
+  border: 0px;
+}
+.overview {
+  cursor: pointer;
+  padding: 1%;
+}
+.overviewInput {
+  width: 80%;
+  font-size: medium;
+  border-radius: 10px;
+  padding: 1%;
+}
+
+/* ////////////////////////////////// MainPage ///////////////// */
+.gridElement {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5%;
+  padding-left: 5%;
+  padding-bottom: 10%;
+  /* height: 100%; */
+}
+
+@media (max-width: 768px) {
+  .gridElement {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* //////////////////////// Progression //////////////////////// */
+.progression {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  gap: 20%;
+}
+.progress,
+.timer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  justify-content: center;
+  text-align: center;
+}
+.progressValue {
+  position: absolute;
+}
+
+.progressInput {
+  width: 20%;
+}
+
+/* /////////////////////////////////// Group Chat//////////////////////////////// */
+
+.groupChat {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 50vh;
+  background-color: white;
+  border-radius: 10px;
+}
+.chating {
+  height: 80vh;
+  overflow-y: scroll;
+  padding-bottom: 5%;
+}
+.otherChat {
+  background-color: #c0c0c0;
+  width: 60%;
+  margin-top: 1%;
+  margin-left: 2%;
+  padding: 1%;
+  border-radius: 10px;
+  padding-left: 3%;
+}
+.chatName {
+  font-size: small;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.myChat {
+  margin: auto;
+  background-color: aqua;
+  width: 60%;
+  margin-left: 30%;
+  margin-top: 1%;
+  padding: 1%;
+  border-radius: 10px;
+  padding-left: 3%;
+}
+
+.groupInput {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+}
+.groupInput input {
+  width: 80%;
+  padding: 1%;
+  box-sizing: border-box;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.chating::-webkit-scrollbar {
+  display: none;
+}
+/* //////////////////////// Task //////////////////////////// */
+.level {
+  cursor: pointer;
+  margin-left: "5%";
+  font-weight: "400";
+  font-size: medium;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: "15px";
+}
+.message{
+  cursor: pointer;
+  width: 80%;
+}
+/* ///////////////////////// MileStoneTask ///////////////////////////////// */
+.subTask{
+  margin-left: 10%;
+  cursor: pointer;
+  margin-top: 2%;
+}
+.addInput{
+  padding-left: 10%;
+  padding-right: 10%;
+  cursor: pointer;
+  margin-left: 10%;
+  border-radius: 10px;
+  border: 1px solid black; 
+  width: 5%;
+  margin-top: 3%;
 }

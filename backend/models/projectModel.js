@@ -4,6 +4,7 @@ const taskSchema = new mongoose.Schema({
   name: { type: String, default: "Add Task Name" },
   description: { type: String, default: "Add Task Description" },
   completed: { type: Boolean, default: false },
+  level: { type: String, default:"Basic"}
 });
 
 const taskMileStoneSchema = new mongoose.Schema({

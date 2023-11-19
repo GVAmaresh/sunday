@@ -1,8 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../App";
 function ProjectList() {
-  //   const [createProject, setCreateProject] = useState(false);
   const { createProject, setCreateProject } = useContext(UserContext);
+  const inputRef = useRef();
+  const [project, setProject] = useState([
+    "Nokia Website",
+    "Nokia Website",
+    "Nokia Website",
+    "Nokia Website",
+    "Nokia Website",
+    "Nokia Website",
+  ]);
   const handleProjectClick = (projectId) => {
     document.querySelectorAll(".project").forEach((e) => {
       if (parseInt(e.id) === projectId)
@@ -14,14 +22,16 @@ function ProjectList() {
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      console.log("Pressed");
+      console.log(event.target.value)
+      setProject(pro=>[...pro, event.target.value])
+      setCreateProject(false);
     }
   };
 
   return (
     <div className="projectList">
       <div className="projectHeading">Projects</div>
-      {Array.from({ length: 5 }, (_, index) => (
+      {project.map((e, index) => (
         <div
           className="project"
           id={index}
@@ -31,7 +41,7 @@ function ProjectList() {
           }}
           key={index}
         >
-          Nokia Website
+          {e}
         </div>
       ))}
       {createProject ? (
